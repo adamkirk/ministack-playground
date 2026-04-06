@@ -1,0 +1,26 @@
+services:
+  ministack:
+    image: ministack
+    # port: 4566
+    environment:
+      LOG_LEVEL: INFO
+      MINISTACK_HOST: ministack
+      MINISTACK_REGION: eu-west-2
+      PERSIST_STATE: 1
+      STATE_DIR: /data/ministack
+    volumes:
+      # For running real containers mocking lambda/ecs/rds
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ministack:/data/ministack
+
+  aws-cli:
+    profiles:
+      # Stop this starting up, only used manually.
+      - manual
+    image: amazon/aws-cli:2.34.24
+    volumes:
+      - ./svc/aws-cli/creds:/root/.aws
+      - ./svc/aws-cli/docker/aliases:/root/.bashrc
+    
+volumes:
+  ministack:

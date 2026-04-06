@@ -1,0 +1,1 @@
+alias aws="aws --endpoint-url=http://ministack:4566"
